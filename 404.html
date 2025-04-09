@@ -1,0 +1,43 @@
+<!-- FILE 1: 404.html (Broken Distress Signal) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Signal Lost</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <style>
+    body {
+      background-color: #0e0e0e;
+      color: #00ffcc;
+      font-family: monospace;
+      padding: 2rem;
+    }
+    .terminal {
+      border-left: 5px solid #00ffcc;
+      padding-left: 1rem;
+      white-space: pre-wrap;
+      animation: flicker 2s infinite;
+    }
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      45% { opacity: 0.6; }
+      50% { opacity: 0.2; }
+      55% { opacity: 0.6; }
+    }
+  </style>
+</head>
+<body>
+  <h1>/// SIGNAL LOST ///</h1>
+  <div class="terminal">
+    > Connection to <strong>GUTTERFORGE NODE</strong> failed.<br>
+    > ERROR CODE: 404-ASTRA<br>
+    > Ontological coordinates not recognized.<br>
+    > Broadcasting emergency beacon...<br>
+    > ...<br>
+    > ...<br>
+    > NO RESPONSE. SYSTEM DORMANT.<br><br>
+    [Return to safety: <a href="index.html" style="color:#00ffcc; text-decoration:underline;">Gutterforge Mainframe</a>]
+  </div>
+</body>
+</html>
