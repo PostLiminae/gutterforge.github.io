@@ -46,7 +46,8 @@
     let selectedLog = urlParams.get('log');
 
     // Fetch logs from external JSON file
-    fetch('https://github.com/PostLiminae/gutterforge.github.io/blob/main/logs.json')
+    fetch('https://raw.githubusercontent.com/postliminae/gutterforge.github.io/main/logs/logs.json')
+
       .then(response => response.json())
       .then(logs => {
         const keys = Object.keys(logs);
