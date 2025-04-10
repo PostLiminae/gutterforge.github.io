@@ -41,50 +41,58 @@
     <span id="typewriter"></span><span class="cursor"></span>
   </div>
 
-  <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    let selectedLog = urlParams.get('log');
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+  let selectedLog = urlParams.get('log');
 
-    // Fetch logs from external JSON file
-    fetch('https://raw.githubusercontent.com/postliminae/gutterforge.github.io/main/logs/logs.json')
+  const JSON_URL = 'https://raw.githubusercontent.com/postliminae/gutterforge.github.io/main/logs/logs.json';
 
-      .then(response => response.json())
-      .then(logs => {
-        const keys = Object.keys(logs);
-        if (!selectedLog || !logs[selectedLog]) {
-          selectedLog = keys[Math.floor(Math.random() * keys.length)];
-        }
+  console.log("📡 Attempting to fetch:", JSON_URL);
 
-        const log = logs[selectedLog];
-        let fullText = '';
+  fetch(JSON_URL)
+    .then(res => {
+      if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+      return res.json();
+    })
+    .then(logs => {
+      const keys = Object.keys(logs);
+      if (!selectedLog || !logs[selectedLog]) {
+        selectedLog = keys[Math.floor(Math.random() * keys.length)];
+      }
 
-        fullText += `> Recovered from: [${log.source}]\n`;
-        fullText += `> Access Level: Internal Use Only\n`;
-        fullText += `> Entry Timestamp: ${log.timestamp}\n\n`;
-        fullText += `> SUBJECT: \"${log.title}\"\n\n`;
-        fullText += '> AUDIO TRANSCRIPTION INITIATED...\n';
-        log.body.forEach(line => {
-          fullText += `> ${line}\n`;
-        });
-        fullText += '> END ENTRY';
+      const log = logs[selectedLog];
+      let fullText = '';
 
-        let i = 0;
-        const speed = 25;
-        const output = document.getElementById("typewriter");
-
-        function type() {
-          if (i < fullText.length) {
-            output.innerHTML += fullText.charAt(i);
-            i++;
-            setTimeout(type, speed);
-          }
-        }
-
-        type();
-      })
-      .catch(err => {
-        document.getElementById("typewriter").innerText = '> ERROR: Failed to load logs.\n> ' + err;
+      fullText += `> Recovered from: [${log.source}]\n`;
+      fullText += `> Access Level: Internal Use Only\n`;
+      fullText += `> Entry Timestamp: ${log.timestamp}\n\n`;
+      fullText += `> SUBJECT: \"${log.title}\"\n\n`;
+      fullText += '> AUDIO TRANSCRIPTION INITIATED...\n';
+      log.body.forEach(line => {
+        fullText += `> ${line}\n`;
       });
-  </script>
+      fullText += '> END ENTRY';
+
+      let i = 0;
+      const speed = 25;
+      const output = document.getElementById("typewriter");
+
+      function type() {
+        if (i < fullText.length) {
+          output.innerHTML += fullText.charAt(i);
+          i++;
+          setTimeout(type, speed);
+        }
+      }
+
+      type();
+    })
+    .catch(err => {
+      console.error("❌ Fetch or JSON error:", err);
+      const output = document.getElementById("typewriter");
+      output.innerText = `> ERROR: Failed to load logs.\n> ${err}`;
+    });
+</script>
+
 </body>
 </html>
