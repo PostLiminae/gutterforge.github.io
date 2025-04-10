@@ -113,10 +113,13 @@
         console.log(\"Autoplay blocked until user interacts\");
       });
     }
-    document.removeEventListener('click', startAudio);
+    window.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('click', startAudio);
   };
   window.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('click', startAudio);
+       }
+    document.removeEventListener('click', startAudio);
 });
 
 
