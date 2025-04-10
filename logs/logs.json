@@ -1,0 +1,23 @@
+{
+  "echoes": {
+    "title": "Echoes in the Engine",
+    "source": "Blacksite Archive: Derelict 7",
+    "timestamp": "-416.92.201 // Local Grid",
+    "body": [
+      "We didn’t build this place.",
+      "We found it.",
+      "Buried beneath fractured orbit lines.",
+      "Breathing. Listening. Watching us watch it..."
+    ]
+  },
+  "thr-053": {
+    "title": "Ontological Breach: THR-053",
+    "source": "Veil Segment 22-B",
+    "timestamp": "Unknown",
+    "body": [
+      "Unstable recursion field detected.",
+      "Observers lost identity cohesion.",
+      "Recorded statement: 'We were never alone. Only unaware.'"
+    ]
+  }
+}
