@@ -108,7 +108,7 @@
   // Attempt to play audio after user interacts with the page
   const startAudio = () => {
     if (audioEnabled) {
-      audio.volume = 0.4;
+      audio.volume = 1.0;
       audio.play().catch(err => {
         console.log(\"Autoplay blocked until user interacts\");
       });
