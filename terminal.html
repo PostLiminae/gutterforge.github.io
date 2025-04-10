@@ -115,7 +115,10 @@
     }
     document.removeEventListener('click', startAudio);
   };
+  window.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('click', startAudio);
+});
+
 
   // Toggle button logic
   toggle.addEventListener('click', () => {
