@@ -32,18 +32,38 @@
       "Recovery note: Log file retrieved from a ruptured data cell..."
     ]
   },
-  "kethra-lab": {
-    "title": "LAB NODE STATUS REPORT \u2013 LRX-Kethra Node",
-    "source": "LRX-Kethra Node / Kethra IV Inner Lagrange",
-    "timestamp": "Unknown (Week 7 Summary)",
-    "body": [
-      "Trial 042 \u2013 Synthetic vacuum-pulled mold with 0.3% deviation...",
-      "Trial 045 \u2013 Lattice held structural integrity for 19 seconds...",
-      "Unexpected Variable \u2013 Trial 046 Prep: Riko introduced a trace layer...",
-      "Inventory Note: Down to 4 canisters of triox plasma sheath fluid...",
-      "Personal Addendum (Encrypted): Sponsor hasn\u2019t called in two weeks...",
-      "Data recovered from onboard storage array fragment..."
-    ]
+"kethra-lab": {
+  "title": "LAB NODE STATUS REPORT – LRX-Kethra Node",
+  "source": "LRX-Kethra Node / Kethra IV Inner Lagrange",
+  "timestamp": "Week 7 Summary (Trial 042–046)",
+  "body": [
+    "Objective:",
+    "Continued investigation into graphenide-alumox microstrand lattices for use in near-field neutron absorption and heat transfer stability across tier-2 modular fusion assemblies. Lattice designated \"Virex-7\" under internal schema.",
+    "",
+    "Trial 042",
+    "Initial impression run complete. Synthetic vacuum-pulled mold with 0.3% deviation. Core lattice showed early failure under 84 MW equivalent thermal stress. Breakdown initiated at phase boundary between oxidized microstrand and amorphous silicate underlayer—suggests ongoing bonding fault, likely from solvent deposition phase inconsistency.",
+    "Adjusted laser sintering time by +0.2 sec for next mold run. Still no reflow layer to manage energy dispersal. That remains the bottleneck.",
+    "",
+    "Trial 045",
+    "Partial success. Lattice held structural integrity for 19 seconds at 91 MW load (27.5 K max localized). Failed at weldline junction—fracture pattern matches early prediction models. Good.",
+    "Recommending switch from FEP-aligned scaffold to low-mass borophene sleeve for sheath casing. Simulations predict 11% increase in localized tensile survivability under same strain envelope. Requires recalibrating thermal bleed rate assumptions.",
+    "",
+    "Unexpected Variable – Trial 046 Prep",
+    "Riko introduced a trace layer of hexaboron interstitial dopant without filing override form. Says he read an archived Osaka paper that claimed promising photon channeling effects. He's right—output curve briefly spiked to 102 MW before collapse.",
+    "That’s over baseline cap. Only reason the test cradle didn’t crack was the dampener core we stole from that salvage crate last month.",
+    "I’m not filing a report. But I am logging this. Quietly.",
+    "…We might be onto something.",
+    "",
+    "Inventory Note:",
+    "Down to 4 canisters of triox plasma sheath fluid. Rationing now. Blacksite supply run not due for 9 more days. Riko’s been splicing backup coolant from off-spec reaction waste. If anyone asks, it’s his idea.",
+    "",
+    "Personal Addendum (Encrypted):",
+    "The sponsor hasn’t called in two weeks. No uplink pulses. That’s not normal.",
+    "If we break containment or overshoot core stability next week… there might not be anyone left to tell.",
+    "",
+    "[End Log]",
+    "Data recovered from onboard storage array fragment. Energy signature confirmed Virex lattice ignition at 104.2 MW. No life signs present within 0.4 km of detonation radius. Lab module destroyed in-place. Sponsor unknown."
+  ]
   },
   "langmuir-vector": {
     "title": "MISSION FLIGHT RECORD \u2013 SSV Langmuir Vector",
