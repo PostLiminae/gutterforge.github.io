@@ -80,5 +80,54 @@
 
     type();
   </script>
+  
+  <!-- Ambient Background Audio -->
+<audio id="bg-audio" loop>
+  <source src="audio/thocky-keyboard-sound-effect-264568.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<!-- Audio Toggle Button -->
+<div style="text-align:center; margin-top: 1.5rem;">
+  <button id="audio-toggle" style="
+    background-color: #111;
+    border: 2px solid #33ffcc;
+    color: #33ffcc;
+    font-family: monospace;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  ">🔊 Mute Ambience</button>
+</div>
+
+<script>
+  const audio = document.getElementById('bg-audio');
+  const toggle = document.getElementById('audio-toggle');
+  let audioEnabled = true;
+
+  // Attempt to play audio after user interacts with the page
+  const startAudio = () => {
+    if (audioEnabled) {
+      audio.volume = 0.4;
+      audio.play().catch(err => {
+        console.log(\"Autoplay blocked until user interacts\");
+      });
+    }
+    document.removeEventListener('click', startAudio);
+  };
+  document.addEventListener('click', startAudio);
+
+  // Toggle button logic
+  toggle.addEventListener('click', () => {
+    if (audio.muted) {
+      audio.muted = false;
+      toggle.innerText = '🔊 Mute Ambience';
+    } else {
+      audio.muted = true;
+      toggle.innerText = '🔇 Unmute Ambience';
+    }
+  });
+</script>
+
 </body>
 </html>
