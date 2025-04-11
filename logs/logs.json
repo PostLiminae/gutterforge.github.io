@@ -67,27 +67,22 @@
       "Recovered from blackbox shard in the Kaelrim Drift debris field. No hull sections or crew remains recovered. AI core fragmented. Shadow anomaly still registered on drift-side Gutter anchor once every 11.4 hours."
     ]
   },
-  "calliphora-237a": {
-    "title": "TERMINAL LOG 237-A – SHIPBOARD RECORDS ACCESS",
-    "source": "MNS Calliphora",
-    "timestamp": "[Last Sync: 2320-11-07T16:42:33Z]",
-    "body": [
-      "VESSEL ID: MNS Calliphora",
-      "STATUS: [Last Sync: 2320-11-07T16:42:33Z]",
-      "LOCATION: [Uncertain – Ping Echo Received ~34.8 km from Registered Vector]",
-      "ACCESS LEVEL: General Crew / Encrypted Subsections",
-      "",
-      "[Log Entry 14: Routine Engineering Inspection – Technician Levarn H.]",
-      "08:00 – Recirculation pumps stalling again in Section C-12. Nothing flagged on diagnostics, but the pressure differential’s climbing past safe float. Switched to manual override and flushed line. Will check again during third shift rotation.",
-      "09:14 – Another flicker on the thermal readout below Starboard 3. Still within margins. Logged it anyway.",
-      "10:30 – Coffee’s still gone. Three days now. That’s not a supply issue, that’s sabotage.",
-      "11:18 – Halverson dropped a wrench through the grating. Again. That’s four this month.",
-      "12:40 – Got comms from Bridge. They’re running a new diagnostic across life support. I’m guessing this is about the noise people keep reporting near the water processors. Doubt it’s anything—half this ship creaks when you walk wrong.",
-      "13:42 – Finishing inspection notes. Nothing critical. Just the usual hums and glitches. Atmosphere stable. CO2 at 0.04%. Hull temperature running cool.",
-      "",
-      "Signing off. If someone finds this and we’re all dead, tell Halverson he still owes me five credits for that socket set.",
-      "",
-      "[End Log]"
-    ]
-  }
+  "calliphora-log": {
+  "title": "SHIPBOARD RECORDS ACCESS – MNS Calliphora",
+  "source": "MNS Calliphora / Uncertain Vector",
+  "timestamp": "2320-11-07T16:42:33Z",
+  "body": [
+    "[Log Entry 14: Routine Engineering Inspection – Technician Levarn H.]",
+    "08:00 – Recirculation pumps stalling again in Section C-12. Nothing flagged on diagnostics, but the pressure differential’s climbing past safe float. Switched to manual override and flushed line. Will check again during third shift rotation.",
+    "09:14 – Another flicker on the thermal readout below Starboard 3. Still within margins. Logged it anyway.",
+    "10:30 – Coffee’s still gone. Three days now. That’s not a supply issue, that’s sabotage.",
+    "11:18 – Halverson dropped a wrench through the grating. Again. That’s four this month.",
+    "12:40 – Got comms from Bridge. They’re running a new diagnostic across life support. I’m guessing this is about the noise people keep reporting near the water processors. Doubt it’s anything—half this ship creaks when you walk wrong.",
+    "13:42 – Finishing inspection notes. Nothing critical. Just the usual hums and glitches. Atmosphere stable. CO2 at 0.04%. Hull temperature running cool.",
+    "Signing off. If someone finds this and we’re all dead, tell Halverson he still owes me five credits for that socket set.",
+    "",
+    "[End Log]"
+  ]
+}
+
 }
