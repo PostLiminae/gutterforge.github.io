@@ -43,9 +43,9 @@
       "",
       "Anomaly 1 – Echo Lag",
       "16:57 – Our lateral sonar pulse on the asteroid shelf returned 2.1 seconds late, with the waveform inverted. Full pulse strength, clear signature, no known object in that vector.",
-      "AI registered a false positive object: “SSV Langmuir Vector” ~31 meters offset. Position confirmed negative. Visuals empty.",
+      "AI registered a false positive object: \"SSV Langmuir Vector\" ~31 meters offset. Position confirmed negative. Visuals empty.",
       "Engineering ran a diagnostic. All systems nominal. Clock drift was within specs.",
-      "Logged as sensor ghost, but the AI’s tone changed when asked to reprocess it. She used the passive “we.”",
+      "Logged as sensor ghost, but the AI’s tone changed when asked to reprocess it. She used the passive \"we.\"",
       "",
       "Anomaly 2 – Internal Pressure Drift",
       "17:22 – Compartment D recorded internal pressure fluctuation of +0.3 kPa. No breach, no thermal shift. Just... pressure.",
@@ -68,4 +68,3 @@
     ]
   }
 }
-
