@@ -62,6 +62,59 @@
   pointer-events: none;
   opacity: 0.25;
 }
+			<style>
+  /* === New Hover State for Features === */
+  ul.features li {
+    border-left: 3px solid #00cccc;
+    padding-left: 1rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.2s ease;
+  }
+
+  ul.features li:hover {
+    transform: scale(1.015);
+    box-shadow: 0 0 12px #00ffeebb;
+    background-color: #0d1b1b;
+  }
+
+  /* === Grain Overlay === */
+  body::after {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('https://www.transparenttextures.com/patterns/noise.png');
+    opacity: 0.05;
+    z-index: 0;
+    pointer-events: none;
+    mix-blend-mode: screen;
+  }
+
+  /* === Live Feed Box === */
+  .live-feed {
+    background-color: #121212;
+    border-left: 3px solid #33ffaa;
+    padding: 1rem 1.5rem;
+    margin-top: 2rem;
+    box-shadow: 0 0 6px #00ffe655;
+  }
+
+  .live-feed h3 {
+    margin-top: 0;
+    font-size: 1.1rem;
+    color: #66ffe6;
+  }
+
+  .live-feed pre {
+    color: #c4f2f2;
+    white-space: pre-wrap;
+    font-family: monospace;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+</style>
+
 
 		</style>
 	</head>
@@ -99,6 +152,12 @@
 					</p>
 					<p>From malfunctioning ontological nurseries to cults of quantum recursion, this is a setting that asks: <em>"What breaks first—the ship, or the soul?"</em></p>
 				</section>
+
+				<section class="main live-feed" id="live-log-fragment">
+  <h3>Live Echo Fragment</h3>
+  <pre id="live-log-preview">Loading latest log...</pre>
+</section>
+
 
 				<!-- Links -->
 				<section id="links" class="main">
@@ -195,6 +254,28 @@
 
   animateStars();
 </script>
+		<script>
+  const LOG_URL = 'https://raw.githubusercontent.com/postliminae/gutterforge.github.io/main/logs/logs.json';
+
+  fetch(LOG_URL)
+    .then(res => res.json())
+    .then(logs => {
+      const keys = Object.keys(logs);
+      const entry = logs[keys[Math.floor(Math.random() * keys.length)]];
+      let preview = `> ${entry.title}\n> ${entry.source}\n\n`;
+
+      for (let i = 0; i < Math.min(6, entry.body.length); i++) {
+        preview += `> ${entry.body[i]}\n`;
+      }
+
+      preview += "\n> ... [Full Log Archived]";
+      document.getElementById("live-log-preview").textContent = preview;
+    })
+    .catch(err => {
+      document.getElementById("live-log-preview").textContent = "> ERROR: Uplink disrupted.\n> Could not retrieve logs.";
+    });
+</script>
+
 
 	</body>
 </html>
