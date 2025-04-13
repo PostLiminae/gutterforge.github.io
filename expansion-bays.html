@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expansion Modules // Gutterforge Systems</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <style>
+    body {
+      background-color: #0a0a0a;
+      color: #33ffcc;
+      font-family: monospace;
+      margin: 0;
+      padding: 2rem;
+    }
+    #starfield {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.25;
+    }
+    body::after {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background-image: url('https://www.transparenttextures.com/patterns/noise.png');
+      opacity: 0.05;
+      mix-blend-mode: screen;
+      pointer-events: none;
+      z-index: 0;
+    }
+    #news-ticker {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #030e1a;
+      color: #33aaff;
+      font-size: 0.85rem;
+      padding: 0.4rem 1rem;
+      overflow: hidden;
+      white-space: nowrap;
+      z-index: 1000;
+      border-bottom: 1px solid #044c81;
+    }
+    #news-ticker span {
+      display: inline-block;
+      padding-left: 100%;
+      animation: scroll-left 30s linear infinite;
+    }
+    @keyframes scroll-left {
+      from { transform: translateX(0); }
+      to { transform: translateX(-100%); }
+    }
+    h1, h2, h3 {
+      color: #66ffe6;
+    }
+    .typewriter {
+      white-space: pre-wrap;
+      overflow: hidden;
+    }
+    section {
+      margin-bottom: 3rem;
+    }
+    nav.anchor-nav ul {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 2rem;
+    }
+    nav.anchor-nav ul li {
+      display: inline-block;
+      margin-right: 1rem;
+    }
+    nav.anchor-nav ul li a {
+      color: #33ffcc;
+      text-decoration: none;
+    }
+    nav.anchor-nav ul li a:hover {
+      text-decoration: underline;
+    }
+    .category-section {
+      border-left: 4px solid #00cccc;
+      padding-left: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+<canvas id="starfield"></canvas>
+<div id="news-ticker"><span id="news-content">Loading uplink...</span></div>
+
+<h1>Expansion Modules</h1>
+<div class="typewriter" id="intro"></div>
+
+<nav class="anchor-nav">
+  <ul>
+    <li><a href="#civilian">Civilian Bays</a></li>
+    <li><a href="#military">Military Bays</a></li>
+    <li><a href="#industrial">Industrial Bays</a></li>
+    <li><a href="#experimental">Experimental Bays</a></li>
+    <li><a href="#blacksite">Blacksite / Exotic</a></li>
+  </ul>
+</nav>
+
+<section id="civilian" class="category-section">
+  <h2>Civilian Bays</h2>
+  <p>Modules for habitation, recreation, or morale: crew lounges, cryopods, observatories, and civilian research labs.</p>
+</section>
+
+<section id="military" class="category-section">
+  <h2>Military Bays</h2>
+  <p>Hardpoint-adjacent modules for weapon targeting suites, barracks, shield recharge nodes, or gunnery pods.</p>
+</section>
+
+<section id="industrial" class="category-section">
+  <h2>Industrial Bays</h2>
+  <p>Mining rigs, 3D foundries, repair gantries, and hull-mount fab systems. Efficiency at scale—but volatile under duress.</p>
+</section>
+
+<section id="experimental" class="category-section">
+  <h2>Experimental Bays</h2>
+  <p>AI cores, nonlocal processors, relativistic dampeners. Often illegal. Always unstable.</p>
+</section>
+
+<section id="blacksite" class="category-section">
+  <h2>Blacksite / Exotic Bays</h2>
+  <p>Ontological nurseries. Worm-spliced stasis corridors. Cosmic filtration wells. Few understand them—none walk out unchanged.</p>
+</section>
+
+<script>
+  // Typewriter intro
+  const intro = `Expansion Modules are volumetric allocations for high-intensity, high-integrity systems—modules too complex, dangerous, or exotic to be distributed through standard shipframe wiring.
+
+Each bay installed is a commitment to doctrine. This directory catalogs known bay archetypes across the Drift Arc and Gutterfront sectors.`;
+  let i = 0;
+  const speed = 20;
+  function type() {
+    if (i < intro.length) {
+      document.getElementById("intro").innerHTML += intro.charAt(i);
+      i++;
+      setTimeout(type, speed);
+    }
+  }
+  type();
+
+  // News Ticker fetch
+  const NEWS_URL = 'https://raw.githubusercontent.com/postliminae/gutterforge.github.io/main/logs/news.json';
+  fetch(NEWS_URL)
+    .then(res => res.json())
+    .then(data => {
+      const items = data.news;
+      const tickerText = items.sort(() => 0.5 - Math.random()).slice(0, 10).map(txt => `✦ ${txt}`).join('   ');
+      document.getElementById("news-content").textContent = tickerText;
+    })
+    .catch(() => {
+      document.getElementById("news-content").textContent = '✦ No uplink to news relay. Standby for refresh...';
+    });
+
+  // Starfield
+  const canvas = document.getElementById('starfield');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    stars = [];
+    for (let i = 0; i < 150; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 1.5 + 0.5,
+        dx: (Math.random() - 0.5) * 0.2,
+        dy: (Math.random() - 0.5) * 0.2,
+        color: ['#33ffcc', '#33ffaa', '#ffffff'][Math.floor(Math.random() * 3)]
+      });
+    }
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+  function animateStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let star of stars) {
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+      ctx.fillStyle = star.color;
+      ctx.shadowColor = star.color;
+      ctx.shadowBlur = 6;
+      ctx.fill();
+      star.x += star.dx;
+      star.y += star.dy;
+      if (star.x < 0) star.x = canvas.width;
+      if (star.x > canvas.width) star.x = 0;
+      if (star.y < 0) star.y = canvas.height;
+      if (star.y > canvas.height) star.y = 0;
+    }
+    requestAnimationFrame(animateStars);
+  }
+  animateStars();
+</script>
+
+</body>
+</html>
