@@ -1,1 +1,20 @@
+{
+  "logs": [
+  {
+  "id": "DEVLOG 001",
+  "date": "2025-03-13",
+  "title": "Initial Deployment Milestone",
+  "body": [
+    "Ended up getting devlogs page and expansion bays page to a minimum level of completeness—no working information yet, but it’s not going to for some time yet.",
+    "Everything besides character creation is handled in terms of the TTRPG itself, so handling as much of the website as possible is required in the next few weeks.",
+    "With the addition of the devlogs page I’ll end up making a few of these as things progress.",
+    "As it stands, there is a basic vision coming into formation for The Gutter in terms of the project’s various pages on the website, and the mechanics and rule systems are already handled.",
+    "It all needs a lot of polishing up before release, but an MVP should be ready before too long.",
+    "Next up is going to end up being character creation in terms of the RPG work, and probably making up the ontological nursery page in terms of the website.",
+    "Not sure which will take more time—I’ve already got a good idea of what character creation is going to end up looking like, and I want something on the ontological nursery page that really pops and stands out—not sure what yet."
+  ]
+}
+
+  ]
+}
 
