@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The Gutter: Political + Law Generator</title>
+  <style>
+    body {
+      background-color: #111;
+      color: #ddd;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 40px;
+    }
+    h1, h2 {
+      color: #00f7ff;
+    }
+    button {
+      background-color: #00f7ff;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+    .output {
+      background: #1a1a1a;
+      border-left: 4px solid #00f7ff;
+      padding: 20px;
+      white-space: pre-wrap;
+      font-size: 15px;
+      margin-bottom: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🏛️ The Gutter: Political System Generator</h1>
+  <button onclick="generatePolitics()">Generate Political System</button>
+  <div class="output" id="politicsOutput">Click the button above to generate a political system.</div>
+
+  <h2>📜 Procedural Law Code</h2>
+  <button onclick="generateLawCode()">Generate Full Law Code</button>
+  <div class="output" id="lawOutput">Click the button above to generate procedural laws.</div>
+
+  <script>
+    function pick(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function generatePolitics() {
+      const govTypes = [
+        "Corporate Directorate", "Technocratic Council", "Autocratic Stronghold", "Religious Dominion",
+        "Anarcho-Collective Network", "AI Administrative Core", "Martial Junta", "Colonial Assembly",
+        "Warlord Confederacy", "Legalist Bureaucracy", "Democratic Republic", "Oligarcic Council", "Vassal State", "Anarchy"
+      ];
+
+      const enforcementModels = [
+        "Private security megacorp with extrajudicial rights",
+        "Civic patrols reinforced by autonomous drones",
+        "Genetically loyal enforcer caste",
+        "Faith-mandated inquisitors and seers",
+        "Neural compliance collars linked to AI",
+        "Surveillance-integrated threat scoring + stun protocols",
+        "Volunteer militia bound by oaths",
+        "Corrupt urban police with gang affiliations",
+        "Remote justice network via qubit court relay",
+        "Warlord-appointed brutality squads"
+      ];
+
+      const rightsStructures = [
+        "All civic rights suspended; citizen status requires licensing",
+        "Free speech nominally permitted but algorithmically throttled",
+        "Habeas corpus exists but is ignored under martial law",
+        "Citizen rights dictated by caste/genetic heritage",
+        "Rights determined dynamically by behavior reputation index",
+        "Only the affluent retain constitutional protections",
+        "Religious conformity required for full legal rights",
+        "Rights legally equal, but unevenly enforced",
+        "Divergence laws override personal autonomy",
+        "Access to legal recourse requires guild affiliation"
+      ];
+
+      const punishmentModels = [
+        "Atmospheric exile", "Brainwave isolation stasis", "Forced labor reclamation duty",
+        "Implanted behavioral overwrite", "Memory redaction without trial",
+        "Organ forfeiture for medical priority debts", "Randomized public sentencing algorithm",
+        "Combat trials for minor crimes", "Neural jury auction outcome enforcement", "Forced military service", "Traditional rehabilitation",
+        "Instant execution by AI oversight"
+      ];
+
+      const corruptionLevels = [
+        "Institutionally Pure – monitored by non-partisan AI run integrity chains",
+        "Low – corruption is rare or scandalous- all corruption is indirect or plausibly deniable",
+        "Moderate – systemic lobbying but overt bribery is rare",
+        "High – bribery is normalized and expected",
+        "Extreme – criminal syndicates, mega corporations or private individuals effectively run most operations",
+        "Total – nearly every official post is purchased, rented, or blackmailed, sometimes by multiple actors at once"
+      ];
+
+      const factionControls = [
+        "Unified political will (rare)", "Corporate dynasties at odds beneath the surface",
+        "Religious orthodoxy guiding executive decisions",
+        "AI consensus protocols mediating between human blocs",
+        "Criminal cartels influencing high judicial offices",
+        "Military caste vetoing civilian policies",
+        "Foreign planetary syndicate using puppet officials",
+        "Civic unions with strong sway in infrastructure sectors",
+        "Propaganda corps shaping consensus via neural ads",
+        "Warlord factions balancing a violent truce"
+      ];
+
+      const politicalClimates = [
+        "Recently stabilized after a violent uprising",
+        "Teetering on civil collapse due to austerity backlash",
+        "Under foreign occupation with martial curfews",
+        "Holding elections under threat of sabotage",
+        "Governance by emergency executive powers only",
+        "Legal purge ongoing—old officials vanished",
+        "Decentralized governance with redundant authorities",
+        "Experiencing ideological fragmentation in the council",
+        "Succession crisis unresolved for over a decade",
+        "Autonomy referendum scheduled amid civil tension"
+      ];
+
+      const blackMarketSeverity = [
+        "Completely suppressed – any transaction is fatal",
+        "Mostly suppressed – only ghost nets survive",
+        "Present but clandestine – encrypted broker nodes only",
+        "Widespread – local authorities tolerate limited vice",
+        "Integral – controlled by the state for plausible deniability",
+        "Dominant – official economy functions as a shell for black trade"
+      ];
+
+      const output = `
+Government Type: ${pick(govTypes)}
+Enforcement: ${pick(enforcementModels)}
+Citizen Rights: ${pick(rightsStructures)}
+
+Legal Punishments:
+  • ${pick(punishmentModels)}
+  • ${pick(punishmentModels)}
+
+Corruption Level: ${pick(corruptionLevels)}
+Factional Control: ${pick(factionControls)}
+
+Political Climate: ${pick(politicalClimates)}
+Black Market Severity: ${pick(blackMarketSeverity)}
+`;
+
+      document.getElementById("politicsOutput").innerText = output;
+    }
+
+    function generateLawCode() {
+      const laws = {
+        freedom: [
+          "Total Free Speech – all expression protected",
+          "Curated Zones – propaganda allowed, dissent quarantined",
+          "Factional Control – only state ideology permitted",
+          "Religious Canon – sacred law defines permissible thought",
+          "AI-Governed Discourse – algorithms regulate lexicons"
+        ],
+        surveillance: [
+          "Minimal – entrances monitored only",
+          "Basic Coverage – public zones audio/visual scanned",
+          "Biometric Tracking – retinal, gait, DNA log mandatory",
+          "Sentinel AI Grid – drones monitor behavior trends",
+          "Total Surveillance – neural scans + emotional telemetry"
+        ],
+        weapon: [
+          "Open Carry Permitted – all civilian weapons legal",
+          "Registered Carry – non-lethal only without permit",
+          "Restricted – melee only, ranged banned",
+          "Militia Only – weapons distributed by local factions",
+          "Suppressed – possession = instant incarceration"
+        ],
+        psychic: [
+          "Legal + Licensed – telepathy & foresight regulated",
+          "Restricted – empathy only, other gifts illegal",
+          "Religious Channeling Only – sanctioned priest-seers",
+          "Illegal – psychic use = execution or exile",
+          "Weaponized – government employs state psions"
+        ],
+        religion: [
+          "Secular State – all creeds allowed, none privileged",
+          "State-Preferred Creed – one major faith integrated",
+          "Divine Law – legal code derived from scripture",
+          "Cult-Protected – sanctioned cults exempt from law",
+          "Forbidden – religious activity punishable by exile"
+        ],
+        augmentation: [
+          "All Mods Legal – transhumanism normalized",
+          "Medical Only – military augments restricted",
+          "Licensed Augs – annual registry inspections",
+          "Gene-Supremacist – cybernetics banned",
+          "Organic Purist – all mods banned, including gene edits"
+        ],
+        science: [
+          "Open Research – any study legal",
+          "Council Approval – vetted by AI tribunal",
+          "Forbidden Fields – sapience, necrochem, Gutter-tech banned",
+          "Tradition Locked – only legacy doctrine allowed",
+          "AI Curated – must pass predictive modeling"
+        ],
+        trade: [
+          "Free Market – zero restrictions",
+          "Regulated Capitalism – permits required",
+          "Command Economy – state-controlled pricing",
+          "Monopoly Law – one corp holds rights",
+          "Guild-Only – trade limited to collectives"
+        ],
+        ai: [
+          "Property – all AIs are tools",
+          "Protected Utility – registered and uncopied",
+          "Citizen Grade – high-qubit AIs are persons",
+          "Governance AI – state run by constructs",
+          "Forbidden – sapient AI decompiled on sight"
+        ],
+        quirks: [
+          "Trials in Zero-G Truth Domes – neural scans detect lies",
+          "All Contracts Sung – symphonic signing rites mandatory",
+          "Emotion Visors – motive is admissible evidence",
+          "Randomized Sentencing – punishment by lottery",
+          "Dead AI Testimony – emulated sapients retain standing",
+          "Caste-Based Testimony – value based on genetic strata"
+        ]
+      };
+
+      const output = `
+🗣 Freedom & Expression: ${pick(laws.freedom)}
+🛰 Security & Surveillance: ${pick(laws.surveillance)}
+⚔ Weapon Law: ${pick(laws.weapon)}
+🧠 Psychic Regulation: ${pick(laws.psychic)}
+🕯 Religion & Faith Law: ${pick(laws.religion)}
+🧬 Genetics & Cybernetics: ${pick(laws.augmentation)}
+🔬 Research Policy: ${pick(laws.science)}
+💱 Trade & Economics: ${pick(laws.trade)}
+🤖 AI Legal Status: ${pick(laws.ai)}
+
+🎲 Legal Quirk: ${pick(laws.quirks)}
+`;
+
+      document.getElementById("lawOutput").innerText = output;
+    }
+  </script>
+</body>
+</html>
