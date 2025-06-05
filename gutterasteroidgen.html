@@ -259,3 +259,321 @@ ${roll(resourceWebs)}
 
 </body>
 </html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Asteroid Belt Generator</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background-color: #111;
+      color: #ddd;
+      margin: 40px;
+    }
+    h1 {
+      color: #0ff;
+    }
+    button {
+      background: #0ff;
+      border: none;
+      padding: 10px 16px;
+      margin: 10px 0;
+      font-size: 16px;
+      cursor: pointer;
+      color: #000;
+    }
+    pre {
+      background-color: #1a1a1a;
+      border-left: 4px solid #0ff;
+      padding: 20px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+
+<h1>☄️ Asteroid Belt Generator</h1>
+<button onclick="generateBelt()">Generate Belt Profile</button>
+<pre id="beltOutput">Click to generate a procedurally-modeled asteroid belt system...</pre>
+
+<div style="margin-top: 50px;">
+  <h2 style="color:#00f7ff;">Asteroid Belt Visualizer</h2>
+  <button onclick="generateAsteroidBelt()" style="background:#00f7ff;color:#000;border:none;padding:10px 16px;font-size:16px;margin-bottom:20px;">Generate New Map</button>
+  <div id="asteroidContainer" style="width: 100%; height: 600px; overflow: hidden; position: relative; border: 1px solid #333;">
+    <svg id="asteroidBeltSVG" width="100%" height="100%" style="background:#111; cursor: grab;"></svg>
+    <div id="infoPanel" style="display:none;position:absolute;top:10px;right:10px;width:260px;padding:12px;background:#1a1a1a;color:#ddd;border:1px solid #00f7ff;font-family:'Segoe UI',sans-serif;z-index:10;"></div>
+  </div>
+</div>
+
+<script>
+function generateBelt() {
+  function roll(arr, count = 1) {
+    const results = [];
+    for (let i = 0; i < count; i++) {
+      results.push(arr[Math.floor(Math.random() * arr.length)]);
+    }
+    return count === 1 ? results[0] : results;
+  }
+
+  // Core characteristics
+  const beltTypes = [
+    "Standard circumstellar belt (~2.5 AU)",
+    "Post-planetary detritus ring (~4 AU)",
+    "Captured interstellar debris loop",
+    "Tidally sheared moonfield (elliptical)",
+    "Artificially seeded mining belt",
+    "Gutter-distorted fragment chain"
+  ];
+
+  const beltDensity = [
+    "Sparse (under 200 known bodies)",
+    "Moderate (few thousand mapped objects)",
+    "Dense (millions of interwoven orbits)",
+    "Saturation Belt (radar-dark swarm)",
+    "Debris Storm (unmappable live fragmentation)"
+  ];
+
+  const orbitBehavior = [
+    "Stable, slowly expanding outward",
+    "Chaotic resonance with gas giant nearby",
+    "Gravitationally shepherded by Titan-class body",
+    "Warped by historic stellar flare",
+    "Orbit decays by 0.01 AU per 1000 years",
+    "Time-locked orbital loop (Gutter tag present)"
+  ];
+
+  // Population breakdowns
+  const bodyBreakdown = [
+    "C-Type 45%, S-Type 25%, M-Type 15%, V-Type 10%, Gutter Frags 5%",
+    "S-Type 40%, M-Type 30%, C-Type 20%, V-Type 5%, Rubble 5%",
+    "Gutter Frags 25%, Rubble 30%, S-Type 20%, C-Type 15%, Rare 10%",
+    "Balanced mix with no single dominant class",
+    "90% Rubble Piles, 10% active-mass Gutter debris",
+    "Titan-core fragments dominate interior rings"
+  ];
+
+  const titans = [
+    "1–2 Titan-class bodies at polar axis",
+    "No major bodies; all sub-km in scale",
+    "3–5 Titan-class entities (linked mining hubs)",
+    "Dormant titan embedded in belt core; gravity anomalies confirmed",
+    "1 hyperasteroid partially mined, partially sealed by vault rings",
+    "Unknown — possible cloaked entity blocking deep scan telemetry"
+  ];
+
+  // Hazards
+  const hazards = [
+    "Dense micro-meteor flux; hull impacts likely",
+    "Intermittent plasma lightning between bodies",
+    "AI salvage drones operate without authorization",
+    "Magnetic anomalies distort ship trajectories mid-jump",
+    "Ancient sensor lattice reactivates every few months",
+    "Radiation pockets mirror pre-collapse flare echoes"
+  ];
+
+  const factions = [
+    "Independent Prospecting Syndicates",
+    "Kuiper Draft Union",
+    "House Shearfall Extraction Guild",
+    "Cult of the Vaulted Flame",
+    "Collapsed AI Nation Remnants",
+    "Gutterblight Adaptation Society",
+    "None — unclaimed but haunted by dead transponder signals"
+  ];
+
+  const historicalTag = [
+    "Site of first post-collapse mining colony",
+    "Lost excavation fleet rumored to persist inside belt",
+    "Proscribed war relics buried beneath rubble orbitals",
+    "Focal zone of Gutter interaction 112 years ago",
+    "Echoes of a destroyed pre-human station persist here",
+    "Quantum-temporal bleed from belt’s edge overlaps neighboring reality"
+  ];
+
+  const resourceProfile = [
+    "Balanced metals and water ice; high viability",
+    "Heavy rare earths and precious alloys; contested territory",
+    "Fuel-grade hydrocarbons dominate mid-belt fields",
+    "Unstable isotopes traced to Gutter-linked fragments",
+    "Residual AI storage cores among dormant V-type husks",
+    "Mass harvestability low — resource pockets erratic but potent"
+  ];
+
+  const output = `
+☄️ ASTEROID BELT SYSTEM REPORT
+
+🪐 BELT TYPE:
+${roll(beltTypes)}
+
+🛰 DENSITY & ORBITAL BEHAVIOR:
+${roll(beltDensity)} — ${roll(orbitBehavior)}
+
+📊 COMPOSITION BREAKDOWN:
+${roll(bodyBreakdown)}
+
+🪨 TITAN-CLASS OBJECTS:
+${roll(titans)}
+
+⚠️ SYSTEMIC HAZARDS:
+• ${roll(hazards)}
+• ${roll(hazards)}
+
+🏴 OPERATING FACTION:
+${roll(factions)}
+
+📖 HISTORICAL NOTES:
+${roll(historicalTag)}
+
+💰 RESOURCE YIELD OUTLOOK:
+${roll(resourceProfile)}
+`;
+
+  document.getElementById("beltOutput").innerText = output;
+}
+</script>
+<script>
+let asteroidData = [];
+
+function generateAsteroidBelt() {
+  const svg = document.getElementById("asteroidBeltSVG");
+  const infoPanel = document.getElementById("infoPanel");
+  asteroidData = [];
+  svg.innerHTML = "";
+  infoPanel.style.display = "none";
+
+  const centerX = svg.clientWidth / 2;
+  const centerY = svg.clientHeight / 2;
+  const numRings = Math.floor(Math.random() * 5) + 3;
+  let asteroidCounter = 1;
+
+  for (let i = 0; i < numRings; i++) {
+    const radius = 50 + i * 60;
+
+    const orbit = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    orbit.setAttribute("cx", centerX);
+    orbit.setAttribute("cy", centerY);
+    orbit.setAttribute("r", radius);
+    orbit.setAttribute("stroke", "#333");
+    orbit.setAttribute("fill", "none");
+    svg.appendChild(orbit);
+
+    const numAsteroids = Math.floor(Math.random() * 80) + 20;
+    for (let j = 0; j < numAsteroids; j++) {
+      const angle = Math.random() * 2 * Math.PI;
+      const x = centerX + radius * Math.cos(angle);
+      const y = centerY + radius * Math.sin(angle);
+      const typeRoll = Math.floor(Math.random() * 6);
+      const types = ["C", "M", "S", "V", "R", "G"];
+      const type = types[typeRoll];
+      const isGutterTaint = (Math.random() < 0.1);
+      const id = `AST-${asteroidCounter.toString().padStart(4, '0')}`;
+
+      const asteroid = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      asteroid.setAttribute("cx", x);
+      asteroid.setAttribute("cy", y);
+      asteroid.setAttribute("r", 3);
+      asteroid.setAttribute("fill", isGutterTaint ? "orange" : "#ccc");
+      asteroid.setAttribute("stroke", "#222");
+      asteroid.setAttribute("stroke-width", "0.5");
+      asteroid.style.cursor = "pointer";
+
+      asteroid.addEventListener("click", function (e) {
+        e.stopPropagation();
+        const data = generateAsteroidInfo(type, isGutterTaint);
+        infoPanel.innerHTML = `<strong style="color:#00f7ff;">${id}</strong><br>
+        <em>Type:</em> ${type}${isGutterTaint ? " (Gutter-Tainted)" : ""}<br>
+        <em>Diameter:</em> ${data.size} km<br>
+        <em>Rotation:</em> ${data.rotation} hrs<br>
+        <em>Stability:</em> ${data.stability}<br>
+        <em>Yield:</em> ${data.yield}<br>
+        <em>Hazard:</em> ${data.hazard}<br>
+        <em>Notes:</em><br>${data.notes}`;
+        infoPanel.style.display = "block";
+      });
+
+      svg.appendChild(asteroid);
+      asteroidCounter++;
+    }
+  }
+}
+
+function generateAsteroidInfo(type, gutter) {
+  const sizes = ["0.3", "1.2", "3.5", "7.0", "11.8"];
+  const rotations = ["0.4", "1.7", "5.9", "14.3"];
+  const stabilities = ["Loose rubble (Explosive)", "Fractured crust", "Minor shearing", "Solid core"];
+  const yields = ["Trace (3–5 tons)", "Low (12–20 tons)", "Moderate (30–50 tons)", "High (80–120 tons)", "Rich (180–300 tons)"];
+  const hazards = [
+    "Micro-meteor storm", "Shifting regolith", "Vacuum plasma arcs",
+    "Mag spike disables tools", "Slag plume", "Gutter shadow: -100°C",
+    "Phantom gravity pulse", "Awakened sensor probe"
+  ];
+  const notes = {
+    "C": "Water ice and organic silicates.",
+    "M": "Pure iron, cobalt. Heavy extraction.",
+    "S": "Nickel and magnesium rich. Good yield.",
+    "V": "Old volcanic. Trapped gases possible.",
+    "R": "Unstable rubble pile. Poor long-term use.",
+    "G": "Gutter-fragment. Time-locked inclusions. Avoid extended stay."
+  };
+
+  return {
+    size: sizes[Math.floor(Math.random() * sizes.length)],
+    rotation: rotations[Math.floor(Math.random() * rotations.length)],
+    stability: stabilities[Math.floor(Math.random() * stabilities.length)],
+    yield: yields[Math.floor(Math.random() * yields.length)],
+    hazard: hazards[Math.floor(Math.random() * hazards.length)],
+    notes: notes[type] + (gutter ? " ⚠ Mutation risk if >12hrs exposure." : "")
+  };
+}
+
+// Zoom & Pan
+(function () {
+  const svg = document.getElementById("asteroidBeltSVG");
+  let isDragging = false, startX, startY, viewBox = [0, 0, svg.clientWidth, svg.clientHeight];
+
+  svg.setAttribute("viewBox", viewBox.join(" "));
+
+  svg.addEventListener("mousedown", e => {
+    isDragging = true;
+    startX = e.clientX;
+    startY = e.clientY;
+    svg.style.cursor = "grabbing";
+  });
+
+  window.addEventListener("mouseup", () => {
+    isDragging = false;
+    svg.style.cursor = "grab";
+  });
+
+  window.addEventListener("mousemove", e => {
+    if (!isDragging) return;
+    const dx = (e.clientX - startX) * (viewBox[2] / svg.clientWidth);
+    const dy = (e.clientY - startY) * (viewBox[3] / svg.clientHeight);
+    viewBox[0] -= dx;
+    viewBox[1] -= dy;
+    svg.setAttribute("viewBox", viewBox.join(" "));
+    startX = e.clientX;
+    startY = e.clientY;
+  });
+
+  svg.addEventListener("wheel", e => {
+    e.preventDefault();
+    const scale = e.deltaY > 0 ? 1.1 : 0.9;
+    const mouseX = e.offsetX;
+    const mouseY = e.offsetY;
+    const x = viewBox[0] + (mouseX / svg.clientWidth) * viewBox[2];
+    const y = viewBox[1] + (mouseY / svg.clientHeight) * viewBox[3];
+
+    viewBox[2] *= scale;
+    viewBox[3] *= scale;
+    viewBox[0] = x - (mouseX / svg.clientWidth) * viewBox[2];
+    viewBox[1] = y - (mouseY / svg.clientHeight) * viewBox[3];
+    svg.setAttribute("viewBox", viewBox.join(" "));
+  });
+})();
+
+generateAsteroidBelt();
+</script>
+
