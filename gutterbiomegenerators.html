@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gutter Terrain Generator</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #111;
+      color: #ddd;
+      padding: 30px;
+    }
+    h1 {
+      color: #00f7ff;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+    button {
+      background-color: #00f7ff;
+      color: #000;
+      border: none;
+      padding: 10px 16px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+    .output {
+      background-color: #1a1a1a;
+      border-left: 4px solid #00f7ff;
+      padding: 20px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <h1>Gutter Terrain Generator</h1>
+  <button onclick="generateTerrain()">Generate Terrain</button>
+  <div class="output" id="output"></div>
+
+  <script>
+    const biomes = [
+      ["Arid Desert", "Dust bloom, deep sand, low traction. Sand glass abrasion possible."],
+      ["Mountain Range", "Narrow passes, rockfalls, strain on cooling systems."],
+      ["Swamp / Wetland", "Hull-level water, humidity damage, submerged critters."],
+      ["Arctic Tundra", "Permafrost, black ice, thermal layer fractures."],
+      ["Urban Ruins", "Collapsed structures, vertical pathways, AI ghost-nets."],
+      ["Jungle Basin", "Dense canopy, vine snare risk, insectoid interference."],
+      ["Plains / Steppe", "Wind shear zones, flank vulnerabilities, mirage effects."],
+      ["Volcanic Crust", "Cracked basalt, corrosive ash winds, heat trauma."],
+      ["Crystalline Flats", "Shards reflect sensors, fracture under pressure."],
+      ["Flooded Lowlands", "Sonar-essential terrain, rusting traps, mold colonies."],
+      ["Magnetized Wastes", "Ion bleed, electronics drift, anomalous fields."],
+      ["Terraform Scarzone", "Shattered gravity wells, pulsating crust, void whispers."],
+      ["Salt Flats", "Hard surface, brittle below, glare overload."],
+      ["Collapsed Mining Basin", "Toxic venting, unstable struts, forgotten mechs."],
+      ["Coral Expanse", "Calcium structures, subsurface lures, sonar anomalies."]
+    ];
+
+    const modifiers = [
+      ["Soft Soil Collapse", "Speed −30%, bog chance (TN 10 each round)."],
+      ["Eroded Cliff Zones", "+50% fall risk if elevation >2m."],
+      ["Dust Storm Layer", "−2 to optics; flares unreliable."],
+      ["High Acidity", "Armor decay: −1 DR/day exposed."],
+      ["Subsurface Cavities", "Sinkhole risk if vehicle >20t."],
+      ["Cracked Tarmac", "+20% tread/wheel wear per mission."],
+      ["Dense Undergrowth", "Slows traversal; walkers unaffected."],
+      ["EM-Active Subsoil", "−2 radar/sensor resolution."],
+      ["Static Fog", "Vision ≤100m; IR boosted."],
+      ["Mag-Leech Flora", "Power drain unless grounded."],
+      ["Gutter Anomaly", "Unstable gravity. GM discretion."],
+      ["Slag Patches", "Melts treads without ceramic shielding."],
+      ["Thorn Spire Growth", "Punctures tires; blocks bipedal travel."],
+      ["Whisper Sand", "False sound echoes; disorients auditory nav."],
+      ["Fungal Mats", "Spore release on impact; hallucinogenic risk."]
+    ];
+
+    const covers = [
+      ["None", "Open field; +2 to incoming attacks."],
+      ["Sparse Boulders / Wrecks", "Hard cover only near ground-level hulls."],
+      ["Natural Berms & Dunes", "Soft cover, suitable for hull-down."],
+      ["Ruined Buildings", "+1 AC; concealment; may collapse under stress."],
+      ["Trenchworks / Gulches", "+2 AC; limited turning radius."],
+      ["Synthetic Barriers / Shields", "Negate 1st hit/round; power drain."],
+      ["Dense Root Masses", "Partial cover; risk of entanglement."],
+      ["Hollow Crystals", "Reflect projectiles erratically."],
+      ["Abandoned Vehicle Park", "Unstable, burnable wreckage."]
+    ];
+
+    const hazards = [
+      ["Tectonic Microfractures", "1-in-6 chance per round of terrain shift."],
+      ["High Pressure Front", "Missiles −1 accuracy; flammable gas risk."],
+      ["Flash Flood Potential", "5-round warning; drowns light vehicles."],
+      ["Searing Heat (50°C+)", "Engines overheat unless adapted."],
+      ["Cryo Mist", "−2 Perception; freeze risk to hydraulics."],
+      ["Contaminant Spores", "Filters required; hull breach risk."],
+      ["Lightning Mesh Field", "Mechs >4m take 1d8/round."],
+      ["Psychogenic Feedback Zone", "Stress accumulation; will saves hourly."],
+      ["Electrostatic Canopy", "Sensor ghosting; target lock unreliable."],
+      ["Methane Sink Pockets", "Explosive if punctured; flare unsafe."]
+    ];
+
+    const speedMap = {
+      "Arid Desert": 0.45, "Mountain Range": 0.35, "Swamp / Wetland": 0.40,
+      "Arctic Tundra": 0.55, "Urban Ruins": 0.38, "Jungle Basin": 0.55,
+      "Plains / Steppe": 0.85, "Volcanic Crust": 0.50, "Crystalline Flats": 0.60,
+      "Flooded Lowlands": 0.25, "Magnetized Wastes": 0.75, "Terraform Scarzone": 0.42,
+      "Salt Flats": 0.75, "Collapsed Mining Basin": 0.33, "Coral Expanse": 0.50
+    };
+
+    function getRandom(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function getTwoRandom(arr) {
+      const shuffled = arr.sort(() => 0.5 - Math.random());
+      return shuffled.slice(0, 2);
+    }
+
+    function generateTerrain() {
+      const biome = getRandom(biomes);
+      const [mod1, mod2] = getTwoRandom(modifiers);
+      const cover = getRandom(covers);
+      const hazard = getRandom(hazards);
+      const speed = speedMap[biome[0]] || 0.6;
+
+      const result = `
+Biome: ${biome[0]}
+Details: ${biome[1]}
+
+Modifier 1: ${mod1[0]}
+Effect: ${mod1[1]}
+
+Modifier 2: ${mod2[0]}
+Effect: ${mod2[1]}
+
+Cover: ${cover[0]}
+Cover Effect: ${cover[1]}
+
+Hazard: ${hazard[0]}
+Hazard Effect: ${hazard[1]}
+
+Speed Multiplier: x${speed.toFixed(2)}
+      `.trim();
+
+      document.getElementById("output").innerText = result;
+    }
+  </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gutter Weather Engine</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #111;
+      color: #ddd;
+      padding: 30px;
+    }
+    h1 {
+      color: #00f7ff;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+    button {
+      background-color: #00f7ff;
+      color: #000;
+      border: none;
+      padding: 10px 16px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+    .output {
+      background-color: #1a1a1a;
+      border-left: 4px solid #00f7ff;
+      padding: 20px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <h1>Gutter Weather Engine</h1>
+  <button onclick="generateWeather()">Generate Weather</button>
+  <div class="output" id="weatherOutput"></div>
+
+  <script>
+    const weatherTypes = [
+      "Clear Skies", "Overcast", "Light Rain", "Heavy Rain", "Thunderstorm", 
+      "Dust Storm", "Snowfall", "Blizzard", "High Winds", "Acidic Rain",
+      "Radiation Storm", "Plasma Storm", "Gutter Anomaly", "Electromagnetic Surge",
+      "Mirror Fog", "Volcanic Ashfall", "Aurora Veil", "Hyper-Humidity", "Ionized Air"
+    ];
+
+    const intensityLevels = ["Low", "Moderate", "High", "Severe", "Extreme"];
+    const tempEffects = ["-10°C", "-5°C", "No Change", "+5°C", "+10°C", "+15°C", "Variable"];
+
+    function generateWeather() {
+      const weather = weatherTypes[Math.floor(Math.random() * weatherTypes.length)];
+      const intensity = intensityLevels[Math.floor(Math.random() * intensityLevels.length)];
+      const duration = Math.floor(Math.random() * 24) + 1; // 1-24 hrs
+      const temp = tempEffects[Math.floor(Math.random() * tempEffects.length)];
+      const visibility = (Math.random() * 9.9 + 0.1).toFixed(1); // 0.1 to 10.0 km
+
+      let details = "";
+
+      // Special weather effects based on type or intensity
+      switch(weather) {
+        case "Dust Storm":
+        case "Blizzard":
+        case "Heavy Rain":
+        case "Mirror Fog":
+          details += "— Severe sensor and targeting penalties. ";
+          break;
+        case "Acidic Rain":
+        case "Radiation Storm":
+        case "Plasma Storm":
+          details += "— Causes hull and biological damage each round. ";
+          break;
+        case "Thunderstorm":
+        case "Lightning Mesh Field":
+        case "Electromagnetic Surge":
+          details += "— Electronics malfunction risk. ";
+          break;
+        case "Gutter Anomaly":
+          details += "— Physics/causality disruption. GM discretion. ";
+          break;
+        case "Volcanic Ashfall":
+          details += "— Engines and intakes risk clogging; vision cut. ";
+          break;
+        case "Aurora Veil":
+          details += "— Sensor ghosts and navigation drift. ";
+          break;
+        case "Ionized Air":
+          details += "— Communications scrambled, EMP risk. ";
+          break;
+      }
+      if(intensity === "Extreme" || intensity === "Severe") {
+        details += "Movement may be halted or heavily penalized. ";
+      }
+
+      document.getElementById("weatherOutput").innerText = 
+`Weather Type: ${weather}
+Intensity: ${intensity}
+Duration: ${duration} hour(s)
+Temperature Effect: ${temp}
+Visibility: ${visibility} km
+${details ? "Special Effects: " + details : ""}`;
+    }
+
+    // Generate on page load for quick testing
+    generateWeather();
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ocean Generator — The Gutter</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background-color: #0a0f1a;
+      color: #d0eaff;
+      padding: 40px;
+    }
+    h1 {
+      font-size: 28px;
+      color: #00bfff;
+    }
+    button {
+      background-color: #00bfff;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      color: #000;
+      margin-top: 10px;
+    }
+    .output {
+      background-color: #112;
+      padding: 20px;
+      border-left: 5px solid #00bfff;
+      margin-top: 20px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🌊 Ocean Generator</h1>
+<button onclick="generateOcean()">Generate Ocean</button>
+<div class="output" id="oceanOutput"></div>
+
+<script>
+function generateOcean() {
+  const types = [
+    {
+      name: "HyperSaline Basin",
+      desc: "Dense saltwater crusts over deeper H₂O. Difficult to navigate below surface.",
+      combat: "Submersibles slowed, depth charge accuracy increased. Buoyancy unreliable.",
+    },
+    {
+      name: "Carbonic Sea",
+      desc: "High CO₂ saturation, acidic waters. Chemically hostile to most hull alloys.",
+      combat: "Requires specialized hull plating. Sonar muted, corrosion risks +10%.",
+    },
+    {
+      name: "Slush Ocean",
+      desc: "Semi-frozen brine ocean below 4°C. Thick slush layers hinder mobility.",
+      combat: "Surface movement at −60% speed. Icebreakers or hovercraft required.",
+    },
+    {
+      name: "Hydrocarbon Expanse",
+      desc: "Titan-style methane-ethane mix. Toxic vapors, combustion fails.",
+      combat: "Nuclear/wave propulsion mandatory. Optical systems degrade in haze.",
+    },
+    {
+      name: "Terrestrial Ocean",
+      desc: "Earthlike salinity, stable stratification. Used as baseline ruleset.",
+      combat: "Standard naval combat rules. Balanced terrain for most vessels.",
+    },
+    {
+      name: "Darkwater Rift",
+      desc: "Deep thermocline with no sunlight penetration. Near-zero visibility.",
+      combat: "Thermal and sonar mandatory. Missiles & torpedoes track 50% less effectively.",
+    },
+    {
+      name: "Biolum Current",
+      desc: "Massive algae clouds pulse with color, sometimes alive.",
+      combat: "Camouflage fails. Visibility pulses randomly. Ship location is rarely private.",
+    },
+    {
+      name: "Ferro-Sea",
+      desc: "Suspended iron particulate ocean. Magnetically volatile.",
+      combat: "EMP chance +20%. Nav gear distortion. No magnetic mines or railguns.",
+    },
+    {
+      name: "Volcanic Troughs",
+      desc: "Tectonic vent fields emitting extreme heat and minerals.",
+      combat: "Hull stress accumulates every round. Sonar white-out in 1d4 areas.",
+    },
+    {
+      name: "Living Sea",
+      desc: "Inhabited by macrofauna and bio-coral civilizations.",
+      combat: "Sea 'attacks' are possible. Diplomacy rolls for safe passage. Predictive targeting fails.",
+    }
+  ];
+
+  const hazards = [
+    "Thermal Spike Layer (temps vary by 40°C across 20 meters)",
+    "Subduction Jetstream (underwater rivers pull subs off course)",
+    "Floating Coral Blades (razor-edged living debris drifts in current)",
+    "Fog Bloom (algae clouds reduce radar range by 70%)",
+    "Cavitating Pressure Pockets (random damage to ballast systems)",
+    "Biocryptic Reef (camouflaged predator mimics terrain)",
+    "Reverse Salinity Zones (buoyancy shifts unpredictably)",
+    "Ontological Anomaly (brief 'gaps' in local logic—GM decides result)"
+  ];
+
+  const weather = [
+    "Calm tides, cloudless",
+    "High wave activity from polar wind",
+    "Monsoon cycle in progress (visibility −80%)",
+    "Underwater lightning storms (1d4 hull damage/round if unshielded)",
+    "Solar flare distortion (sensor disruption x2)",
+    "Gutterstorm convergence cell overhead",
+    "Bioelectric rainfall (energized algae in droplets)",
+    "None—complete sensory deadzone for 1d6 rounds"
+  ];
+
+  const rand = arr => arr[Math.floor(Math.random() * arr.length)];
+  const type = rand(types);
+  const hazard = rand(hazards);
+  const weatherCond = rand(weather);
+
+  const output = `
+🌐 Ocean Type: ${type.name}
+🧾 Description: ${type.desc}
+⚔️ Combat Implications: ${type.combat}
+
+⚠️ Environmental Hazard: ${hazard}
+⛅ Weather Pattern: ${weatherCond}
+
+🛠️ Bluewater Shipbuilding Notes:
+- Hull materials must be compatible with ocean chemistry (refer to ferro/frozen/acidic compatibility table).
+- Nuclear propulsion preferred in methane and non-combustive biomes.
+- Traditional torpedoes and depth charges have −25% effectiveness in anomaly zones.
+
+🎯 Naval Combat Reminder:
+- Use rangefinding via sonar, not optics, in all but Terrestrial and Biolum.
+- EMP & magnetic fields cancel out advanced munitions (disable 1 weapon per system conflict).
+- Depth-based stealth modules receive +1 concealment tier in rifts and troughs.
+`;
+
+  document.getElementById("oceanOutput").innerText = output;
+}
+</script>
+
+</body>
+</html>
