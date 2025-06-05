@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Asteroid Generator</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background-color: #111;
+      color: #ddd;
+      margin: 40px;
+    }
+    h1 {
+      color: #0ff;
+    }
+    button {
+      background: #0ff;
+      border: none;
+      padding: 10px 16px;
+      margin: 10px 0;
+      font-size: 16px;
+      cursor: pointer;
+      color: #000;
+    }
+    pre {
+      background-color: #1a1a1a;
+      border-left: 4px solid #0ff;
+      padding: 20px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🪨 Asteroid Generator & Mining Mission Suite</h1>
+<button onclick="generateAsteroid()">Generate Asteroid + Mission</button>
+<pre id="asteroidOutput">Press the button to begin mining protocol...</pre>
+
+<script>
+function generateAsteroid() {
+  function roll(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
+  const asteroidTypes = [
+    "C-Type (Carbonaceous) – Water ice, silicates, organics. Common and fragile, ideal for hydrolox but risky for EVA.",
+    "S-Type (Silicaceous) – Iron, nickel, magnesium. Solid and workhorse-tier; standard alloys.",
+    "M-Type (Metallic) – Pure iron, cobalt, rare alloys. Dense and volatile; high-grade yield but sensor-scrambling.",
+    "V-Type (Volcanic Relic) – Basalt, olivine, trapped gasses. Rare tectonic memory preserved.",
+    "Rubble Pile – Loosely-bound aggregates. Collapses under strong drilling. May hold ancient debris.",
+    "Gutter Fragment – Time-locked mineral, causes anomalous waveform resonance. Mutagenic after 12+ hours of exposure."
+  ];
+
+  const sizes = [
+    "Micro (~0.3 km) – Compact target, deploy one skiff max.",
+    "Minor (~1.2 km) – Viable for long-term crewed ops.",
+    "Standard (~3.5 km) – Large mining surface, rotational drag risk.",
+    "Major (~7.0 km) – Multiple anchor points required.",
+    "Massive (~11.8 km) – Full surface ops base possible; survey costs increase."
+  ];
+
+  const rotations = [
+    "0.4 hr – Rapid spin; dangerous EVA windows.",
+    "1.7 hr – Tight gravity pocket formations.",
+    "5.9 hr – Optimal for orbital anchors.",
+    "14+ hr – Tidal lock possible, constant daylight or dark."
+  ];
+
+  const stability = [
+    "Explosive – Surface breaks under stress; drones only.",
+    "Fractured Crust – Use vibration-safe rigs.",
+    "Minor Shearing – Normal precautions apply.",
+    "Solid Core – Can support heavy industrial drills."
+  ];
+
+  const yieldGrades = [
+    "Trace Yield – 3–5 tons/week. Barely worth deploying.",
+    "Low Yield – 12–20 tons/week. Supplementary only.",
+    "Moderate Yield – 30–50 tons/week. Profitable with minimal risks.",
+    "High Yield – 80–120 tons/week. Corporate-interest class.",
+    "Rich Yield – 180–300 tons/week. Contested territory."
+  ];
+
+  const hazards = [
+    "Micrometeor Swarm – Roll 1d4 hull damage during anchor setup.",
+    "Shifting Regolith – May consume equipment or bury crew.",
+    "Vacuum Lightning – Plasma arcs without storm clouds.",
+    "Localized Magnet Spikes – Tools disabled for 1d6 turns.",
+    "Old Slag Vent – Pocketed heat flare or jet burst.",
+    "Gutter Shadow – Sudden 100°C temperature drop.",
+    "Phantom Gravity Pulse – Ship anchor drifts in syncopation.",
+    "Ancient Probe Activation – Pre-Silicate tech awakens quietly."
+  ];
+
+  const contractTypes = [
+    "Fuel Supply Run – 'Extract water ice or volatiles for outer belt colonies.'",
+    "Metals Requisition – 'Retrieve industrial iron/nickel payloads, ≥40 tons.'",
+    "Rare Alloy Search – 'Search for Yttrium-Vanadium or Tungsten composites.'",
+    "Rescue & Recovery – 'Retrieve lost drone or survivor ID tags from old op site.'",
+    "Forbidden Tech Sweep – 'Scan and clear sealed tech vault or blacksite fragment.'",
+    "Gutter Sample Probe – 'Insert harmonic resonance probe into time-frozen stratum.'",
+    "Illegal Refueling Site – 'Secure unlisted rebel tanking node for repurpose or denial.'",
+    "Virus Core Retrieval – 'Extract rogue AI fragment encysted within metallic ore.'"
+  ];
+
+  const complications = [
+    "Surface collapses during phase 2 drill—1 drone team lost.",
+    "Armed rival crew demands access under ancient salvage rights.",
+    "Radiation flare causes navlock; visuals desync with instruments.",
+    "Shadow mimic: your own ship appears in hangar scans before arrival.",
+    "Internal AI begins recursive glitch loop—requests override passwords.",
+    "Anomaly: echoes sound like human voices on uncompressed channels.",
+    "Shadow lands before arrival—frame mismatch of 43 seconds detected.",
+    "Time fold: crewmember meets version of self from future on surface."
+  ];
+
+  const rewards = [
+    "Standard payout + bonus for early turnaround.",
+    "Trade license grant for a higher security orbital system.",
+    "Prototype mining tool or custom modpack for rig efficiency.",
+    "Access to encrypted colony archives—may hold hidden map data.",
+    "Reputation gain with blacksite broker or belt syndicate.",
+    "Contained anomaly—GM use: temporal loop, AI core, or mutation catalyst."
+  ];
+
+  const output = `
+🪨 ASTEROID ANALYSIS REPORT
+
+📘 CLASSIFICATION:
+${roll(asteroidTypes)}
+
+📐 PHYSICAL CHARACTERISTICS:
+• Size: ${roll(sizes)}
+• Rotation: ${roll(rotations)}
+• Structural Stability: ${roll(stability)}
+
+🔩 RESOURCE YIELD:
+${roll(yieldGrades)}
+
+⚠️ SURFACE HAZARD:
+${roll(hazards)}
+
+📄 MISSION CONTRACT:
+${roll(contractTypes)}
+
+❗ COMPLICATION:
+${roll(complications)}
+
+💰 REWARD:
+${roll(rewards)}
+`;
+
+  document.getElementById("asteroidOutput").innerText = output;
+}
+</script>
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Titan-Class Asteroid Generator</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background-color: #111;
+      color: #ddd;
+      margin: 40px;
+    }
+    h1 {
+      color: #0ff;
+    }
+    button {
+      background: #0ff;
+      border: none;
+      padding: 10px 16px;
+      margin: 10px 0;
+      font-size: 16px;
+      cursor: pointer;
+      color: #000;
+    }
+    pre {
+      background-color: #1a1a1a;
+      border-left: 4px solid #0ff;
+      padding: 20px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🪐 Titan-Class Asteroid Generator</h1>
+<button onclick="generateTitan()">Generate Titan-Core Profile</button>
+<pre id="titanOutput">Click the button to scan for Titan-Class objects...</pre>
+
+<script>
+function generateTitan() {
+  function roll(arr, num = 1) {
+    const results = [];
+    for (let i = 0; i < num; i++) {
+      results.push(arr[Math.floor(Math.random() * arr.length)]);
+    }
+    return results;
+  }
+
+  const baseProfiles = [
+    "Icy Core — Radius: 400 km • Gravity: 0.04g • Thin H₂O vapor atmosphere. Subsurface colonies possible; often harbor ice fractures that hum under pressure shifts.",
+    "Rocky — Radius: 550 km • Gravity: 0.09g • No atmosphere. Crust penetrated by extensive mine shafts and automated bore-cities; seismic echoes heard in upper tunnels.",
+    "Metallic Core — Radius: 650 km • Gravity: 0.14g • Trace O₂. Mobile refinery hubs orbit this dense titan; anomalous magnetic readings persist.",
+    "Gutter-Linked — Radius: 700 km • Gravity: Variable • Phase-shifting layers. Requires sealed biospheres. Uninhabitable naturally—internal surface topology rotates weekly.",
+    "Dormant Shell — Radius: 800 km • Gravity: 0.18g • No atmosphere. Cracked outer husk encloses ancient vaults sealed with rotating gravity locks; believed to predate Sol.",
+    "Split-Body Binary — Radius: 900 km (split) • Gravities: 0.06g / 0.12g • Shared ion shell. Gravity crossover causes navigational chaos; often contains rich inner cores or AI artifacts."
+  ];
+
+  const structuralFeatures = [
+    "Deep mantle chasm ~20 km vertical drop—gravity anomalies noted at bottom rim.",
+    "Buried blacksite colony: interior power cells active, but logs cease mid-cycle.",
+    "Radiation-sculpted ridge acting as directional antenna—still transmitting.",
+    "Crater 100 km wide lined with crystalline frozen gas—optical distortion noted.",
+    "Magnetic pulses destabilize ship orientation every 43 seconds—non-random?",
+    "Collapsed orbital ring—fractured modules remain locked in equatorial float.",
+    "Time-locked bunker door—periodic distortion field prevents brute access.",
+    "Excavation drones still active—no valid ID, operating under unknown directive."
+  ];
+
+  const resourceWebs = [
+    "Iron-Nickel Core — 250 cr/ton. Industrial baseline resource with deep shaft access.",
+    "Hydrocarbon Pockets — 330 cr/ton. Fuel-grade polymers and vapor distillates.",
+    "Rare Earth Mix — 500 cr/ton. Yttrium, Europium, Neodymium. Heavily guarded claims.",
+    "Volatile Ice — 200 cr/ton. Water-ammonia mix; cryo-regulated tanks mandatory.",
+    "Gutter Trace Elements — ??? cr/ton. Quantum-anchored particulates. Mutagenic under analysis.",
+    "AI Memory Core Vaults — Variable value. Direct neurological interfaces required. Data rumored to hold strategic predictions or pre-collapse schematics."
+  ];
+
+  const nameOptions = [
+    "Dwarf Belt Entity", "Hyperasteroid", "Titan-Core", "Outer Forge Body", "Charon-Analog", "Phase Anchor Mass"
+  ];
+
+  const output = `
+🪐 TITAN-CLASS BODY REPORT
+
+📛 DESIGNATION: ${roll(nameOptions)}
+📘 CORE PROFILE:
+${roll(baseProfiles)}
+
+🛠 STRUCTURAL FEATURES:
+• ${roll(structuralFeatures)[0]}
+• ${roll(structuralFeatures)[1]}
+
+🔩 EXPLOITABLE RESOURCE WEB:
+${roll(resourceWebs)}
+`;
+
+  document.getElementById("titanOutput").innerText = output;
+}
+</script>
+
+</body>
+</html>
