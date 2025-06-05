@@ -158,3 +158,104 @@ function generateAtmosphere() {
 
 </body>
 </html>
+<h2>Gas Giant Generator</h2>
+<button onclick="generateGasGiant()">Generate Gas Giant</button>
+<pre id="gasGiantOutput" style="background-color:#111;padding:20px;border-left:4px solid #0ff;color:#ddd;white-space:pre-wrap;"></pre>
+<script>
+function generateGasGiant() {
+  function pick(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
+  const sizeClass = [
+    "Subgiant (Neptune-sized) – ~17 Earth masses; cold and dense, may have rocky core",
+    "Jovian – Gas giant similar to Jupiter; strong metallic hydrogen layer",
+    "Super-Jovian – >3x Jupiter's mass; extreme radiation and pressure",
+    "Ultra-Massive – Approaching brown dwarf boundary; fusion trace elements detected"
+  ];
+
+  const coloration = [
+    "Pale Blue – Rich in methane and water ice vapor",
+    "Deep Crimson – Organic aerosols and hydrocarbon tholins in upper atmosphere",
+    "Toxic Green – Heavy ammonium and sulfuric presence",
+    "Golden Orange – Iron and silicate particulates suspended in upper bands",
+    "Mottled Silver – High reflectivity; nanocrystalline storms",
+    "Shifting Iridescence – Refraction across multiple ion bands; wavelength instability"
+  ];
+
+  const magnetosphere = [
+    "Weak – Minimal radiation belt; safe for low-orbit platforms",
+    "Weak – Sensor clean zones possible within equatorial arc",
+    "Normal – Medium aurora activity; magnetic shielding required for drones",
+    "Normal – Orbit-stable with some radiation management",
+    "Strong – Radiation belts interfere with ship sensors",
+    "Strong – Ion bursts and data corruption risk every 3d6 hours"
+  ];
+
+  const gutterActivity = [
+    "None – Physics operates within normal tolerances",
+    "Low – Minor waveform drifting at 200 km altitude",
+    "Low – Slight audio-lensing effects in storms",
+    "Moderate – Non-Euclidean storm shapes noted",
+    "Moderate – Time-displacement anomalies above 300 km",
+    "Active – Spatial tearing, waveform gas surges, reality shear at poles"
+  ];
+
+  const primaryGas = ["Hydrogen (H₂)", "Helium (He)", "Methane (CH₄)", "Hydrogen (H₂)", "Exotic Plasma", "Ammonia (NH₃)"];
+  const secondaryGas = ["Methane (CH₄)", "Sulfur Oxides (SOₓ)", "Ammonia (NH₃)", "Ion Drift", "Oxygen (O₂)", "Unknown Volatiles"];
+
+  const traits = [
+    "Metallic snow falls at 2.3 atm; presumed iron or silicate base",
+    "Lightning arcs across equator bands; potential for battery fields",
+    "Suspended jellyfish-like entities; passive, possibly bioluminescent",
+    "Gravity anomalies detected at 1.5 atm; cause localized drag shifts",
+    "Time slippage measured at 3 km; craft clocks desync by ~12s per hour",
+    "Core generates rhythmic pressure pulses—signals exhibit musical structure"
+  ];
+
+  const orbitTypes = [
+    "Inner Orbit – 0.3 AU from host star; high tidal stress",
+    "Mid-Orbit – 1.2 AU; commonly has moons and orbital infrastructure",
+    "Distant Orbit – 4.8 AU; low light, common pirate ambush point",
+    "Rogue Planet – No orbit; flung from home system, deep freeze state",
+    "Binary Gas Pair – Interlocked with second gas giant; gravity field highly unstable",
+    "Gutterfall Anchor – Hosts Lagrange rift; extreme anomaly generation"
+  ];
+
+  const orbitTraits = [
+    "Tidal heating creates permanent cyclone along equator",
+    "Has three rocky moons; two host defunct mining colonies",
+    "Surrounded by a dust halo; covert refueling hub operates illegally",
+    "Moves independently of any star; temperatures plunge below −230°C",
+    "Orbits another gas giant in a decaying loop; erratic storm turbulence",
+    "Contains waveform tear in L4 Lagrange point; physics distorted"
+  ];
+
+  const output = `
+🌌 Gas Giant Report
+
+🪐 Size Class:
+  ${pick(sizeClass)}
+
+🎨 Coloration:
+  ${pick(coloration)}
+
+🧲 Magnetosphere Strength:
+  ${pick(magnetosphere)}
+
+🌀 Gutter Activity Level:
+  ${pick(gutterActivity)}
+
+🌫 Atmospheric Composition:
+  Primary Gas: ${pick(primaryGas)}
+  Secondary Gas: ${pick(secondaryGas)}
+  Unique Trait: ${pick(traits)}
+
+🛰 Orbital Position:
+  ${pick(orbitTypes)}
+  Notable Feature: ${pick(orbitTraits)}
+`;
+
+  document.getElementById("gasGiantOutput").innerText = output;
+}
+</script>
