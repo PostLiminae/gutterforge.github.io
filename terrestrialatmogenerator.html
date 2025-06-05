@@ -259,3 +259,63 @@ function generateGasGiant() {
   document.getElementById("gasGiantOutput").innerText = output;
 }
 </script>
+
+<h2>Gas Harvesting Mission Generator</h2>
+<button onclick="generateGasHarvestMission()">Generate Harvest Mission</button>
+<pre id="gasHarvestOutput" style="background-color:#111;padding:20px;border-left:4px solid #0ff;color:#ddd;white-space:pre-wrap;"></pre>
+<script>
+function generateGasHarvestMission() {
+  function pick(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
+  const contractTypes = [
+    "Fuel Extraction – 'We need methane, deuterium, or trace H₃ isotopes to power orbital burn arrays.'",
+    "Scientific Sample – 'Chart and extract a gas filament containing prebiotic or quantum-organic signatures.'",
+    "Emergency Relay Retrieval – 'Drone 42-A vanished near the irradiated cusp. Recover its log before it expires.'",
+    "Atmospheric Mapping – 'We need a full pressure-gravity profile of equatorial storm lattice B7-G.'",
+    "Gutterfield Anomaly Probe – 'Ion strand above the Fold Scar is blooming. Send a scoop bot *now*.'",
+    "Weaponizable Compound Run – 'High-density ammonium, volatile fluorides... someone will pay top credits.'",
+    "Ecological Interface – 'Something’s living in pressure layer 2.3 atm. We need its waveform resonances.'",
+    "Illegal Material Skim – 'Exotic mist. Don’t ask questions. Don’t bring anyone else. Just scoop and go.'"
+  ];
+
+  const complications = [
+    "AI assistant malfunctions and loops recursive ethical queries mid-dive.",
+    "Storm surge disrupts anchor field; vessel drifts 12.2 km downward—engines strained to return.",
+    "Crew member experiences hallucinations of their own birth being replayed by cloud shapes.",
+    "Rival harvester intercepts signal and claims overlapping zone—threatens kinetic interdiction.",
+    "Gas canisters shift into unrecorded molecular phase—fluid but refracting sound.",
+    "Deep current fractures primary intake manifold—emergency weld required under high pressure.",
+    "Radiation pulse disables all active sensors—backup system rewrites log to null code.",
+    "Collected sample becomes reactive in 0g; tank insulation corrodes at 1% per second until jettison.",
+    "Contract issuer's voice appears in ship logs... despite never broadcasting during mission.",
+    "Ship exits gas layer with double expected fuel... but the collected fuel *sings* when heated."
+  ];
+
+  const rewards = [
+    "Standard credits paid via encrypted ledger transfer—clean and traceable.",
+    "+10% payout if scientific readings are cross-validated by independent labs.",
+    "Access to unique refinery schematic: Allows vapor to liquid compression at 10% improved yield.",
+    "Exotic Upgrade Component – Gas stabilization baffle or high-density molecular sieve unlocked.",
+    "Forbidden Sample – GM Discretion: grants access to unique biotech or psychic upgrade material.",
+    "Reputation increase with a cloaked orbital cult; future mission offers are guaranteed to be... strange."
+  ];
+
+  const output = `
+☁️ GAS HARVESTING MISSION REPORT
+
+🧾 CONTRACT TYPE:
+${pick(contractTypes)}
+
+⚠️ COMPLICATION ENCOUNTERED:
+${pick(complications)}
+
+💰 MISSION REWARD:
+${pick(rewards)}
+`;
+
+  document.getElementById("gasHarvestOutput").innerText = output;
+}
+</script>
+
