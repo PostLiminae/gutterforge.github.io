@@ -1,7 +1,20 @@
 {
   "logs": [
   {
-  "id": "DEVLOG 001",
+ "id": "DEVLOG 002",
+  "date": "2025-06-10",
+  "title": "Additional Generators Milestone",
+  "body": [
+    "MVP of the game itself was created a while ago now, I have built into the PDF document various generators to be used with dice.",
+    "We have atmospheres, terrains, planets and other generators, ive ended up deciding to use procedural generation on the website to allow for ease of code on my behalf-im not good at coding.",
+    "I do hope that as time goes on the various pages end up coming together more effectively, right now ive got a few that look great, a few that look good and quite a lot that looks pretty bad. But aestetics will wait until close to the end.",
+    "Not all of the generators are online yet, but a good few of them are. More will be added as time goes on. I am NOT looking forward to having to handle the ship generator, but procedural stuff is pretty easy and I dont think I need many more JSON parsers.",
+    "Still no polish to be had in terms of the PDF itself, but its at least all mostly there. The mechanics at least. Stuff needs to be playtested, balanced around, I need to redo a good portion of it, probably a few hundred pages worth before I even start the playtest.",
+    "I ended up steering clear of the ontological nursery work on the site, still not handled that but itll be one of the other generators. The next real tangible milestone will most likely be either getting MVP to a downloadable link on the site or finishing up the rest of the generators.",
+    "Most of the tough stuff will come later, and Im not really looking forward to the majority of it."
+  ]
+}
+    "id": "DEVLOG 001",
   "date": "2025-03-13",
   "title": "Initial Deployment Milestone",
   "body": [
