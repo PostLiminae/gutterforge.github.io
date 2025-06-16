@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gutter Star System Generator</title>
+  <style>
+    body {
+      background-color: #111;
+      color: #ddd;
+      font-family: "Segoe UI", sans-serif;
+      margin: 40px;
+    }
+    h1 {
+      color: #00f7ff;
+      font-size: 28px;
+    }
+    button {
+      background: #00f7ff;
+      border: none;
+      padding: 10px 16px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      cursor: pointer;
+      color: #000;
+    }
+    pre {
+      background-color: #1a1a1a;
+      border-left: 4px solid #00f7ff;
+      padding: 20px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌟 The Gutter: Star System Generator</h1>
+  <button onclick="generateSystem()">Generate Star System</button>
+  <pre id="output">Click the button to generate a system.</pre>
+
+<script>
+function random(min, max) {
+  return Math.random() * (max - min) + min;
+}
+function pick(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+function roll(dice) {
+  return Math.floor(Math.random() * dice) + 1;
+}
+
+const starTypes = [
+  { type: "O-type", mass: [16, 100], lum: [30000, 100000], weight: 5 },
+  { type: "B-type", mass: [2.1, 16], lum: [25, 30000], weight: 15 },
+  { type: "A-type", mass: [1.4, 2.1], lum: [5, 25], weight: 20 },
+  { type: "F-type", mass: [1.0, 1.4], lum: [1.5, 5], weight: 15 },
+  { type: "G-type", mass: [0.8, 1.2], lum: [0.6, 1.5], weight: 20 },
+  { type: "K-type", mass: [0.45, 0.8], lum: [0.08, 0.6], weight: 15 },
+  { type: "M-type", mass: [0.08, 0.45], lum: [0.01, 0.08], weight: 10 }
+];
+
+const orbitalZones = [
+  { desc: "Scorched Orbit", dist: 0.1 },
+  { desc: "Inferno Orbit", dist: 0.3 },
+  { desc: "Inner Edge Habitable", dist: 0.6 },
+  { desc: "Central Habitable", dist: 1.0 },
+  { desc: "Outer Habitable", dist: 1.5 },
+  { desc: "Gas Giant Zone", dist: 2.5 },
+  { desc: "Outer Belt", dist: 5.0 },
+  { desc: "Frozen World", dist: 10.0 }
+];
+
+const atmPressures = [
+  { desc: "None", atm: () => 0 },
+  { desc: "Trace", atm: () => random(0.01, 0.1) },
+  { desc: "Thin", atm: () => random(0.2, 0.6) },
+  { desc: "Earthlike", atm: () => random(0.7, 1.3) },
+  { desc: "Dense", atm: () => random(1.4, 4.0) }
+];
+
+const compositions = [
+  "Nitrogen-Oxygen (Breathable)",
+  "Carbon Dioxide (Toxic)",
+  "Methane-Ammonia (Toxic/Explosive)",
+  "Noble Gases (Inert)",
+  "Exotic Organics (Requires mask)"
+];
+
+const asteroidTypes = [
+  "C-Type (Carbonaceous) – Water ice, silicates, organics. Common and fragile, ideal for hydrolox but risky for EVA.",
+  "S-Type (Silicaceous) – Iron, nickel, magnesium. Solid and workhorse-tier; standard alloys.",
+  "M-Type (Metallic) – Pure iron, cobalt, rare alloys. Dense and volatile; high-grade yield but sensor-scrambling.",
+  "V-Type (Volcanic Relic) – Basalt, olivine, trapped gasses. Rare tectonic memory preserved.",
+  "Rubble Pile – Loosely-bound aggregates. Collapses under strong drilling. May hold ancient debris.",
+  "Gutter Fragment – Time-locked mineral, causes anomalous waveform resonance. Mutagenic after 12+ hours of exposure."
+];
+
+const yieldGrades = [
+  "Trace Yield – 3–5 tons/week. Barely worth deploying.",
+  "Low Yield – 12–20 tons/week. Supplementary only.",
+  "Moderate Yield – 30–50 tons/week. Profitable with minimal risks.",
+  "High Yield – 80–120 tons/week. Corporate-interest class.",
+  "Rich Yield – 180–300 tons/week. Contested territory."
+];
+
+const hazards = [
+  "Micrometeor Swarm – Roll 1d4 hull damage during anchor setup.",
+  "Shifting Regolith – May consume equipment or bury crew.",
+  "Vacuum Lightning – Plasma arcs without storm clouds.",
+  "Localized Magnet Spikes – Tools disabled for 1d6 turns.",
+  "Old Slag Vent – Pocketed heat flare or jet burst.",
+  "Gutter Shadow – Sudden 100°C temperature drop.",
+  "Phantom Gravity Pulse – Ship anchor drifts in syncopation.",
+  "Ancient Probe Activation – Pre-Silicate tech awakens quietly."
+];
+
+function pickWeighted(list) {
+  let total = list.reduce((t, i) => t + i.weight, 0);
+  let r = Math.random() * total;
+  for (let item of list) {
+    if (r < item.weight) return item;
+    r -= item.weight;
+  }
+  return list[0];
+}
+
+function generatePlanet(star) {
+  const orbit = pick(orbitalZones);
+  const insolation = star.lum / (orbit.dist ** 2);
+  const mass = random(0.3, 3.0);
+  const radius = Math.pow(mass, 0.3);
+  const gravity = (mass / (radius ** 2)).toFixed(2);
+  const atmoObj = pick(atmPressures);
+  const atmVal = atmoObj.atm();
+  const tEff = 278 * Math.pow(insolation, 0.25);
+  let greenhouse = 0;
+  if (atmVal > 1.4) greenhouse = 50;
+  else if (atmVal > 0.6) greenhouse = 15;
+  else if (atmVal > 0.01) greenhouse = -10;
+  const tSurface = (tEff + greenhouse).toFixed(1);
+  const moons = roll(4);
+  const ring = roll(100) <= 10 ? "Yes" : "No";
+
+  return `Planet — ${orbit.desc} (${orbit.dist} AU)\n  Mass: ${mass.toFixed(2)} Earths  Gravity: ${gravity} g\n  Atmosphere: ${atmoObj.desc} (${atmVal.toFixed(2)} atm)  Composition: ${pick(compositions)}\n  Surface Temp: ~${tSurface} K  Moons: ${moons}  Rings: ${ring}`;
+}
+
+function generateAsteroidBelt() {
+  return `Asteroid Belt — ${pick(asteroidTypes)} | ${pick(yieldGrades)} | Hazard: ${pick(hazards)}`;
+}
+
+function generateSystem() {
+  const sc = pickWeighted(starTypes);
+  const star = {
+    type: sc.type,
+    mass: random(sc.mass[0], sc.mass[1]),
+    lum: random(sc.lum[0], sc.lum[1])
+  };
+
+  const planetCount = roll(6) + 1;
+  const beltCount = roll(3) - 1; // 0-2 belts
+
+  let text = `Star Type: ${star.type} (Mass ${star.mass.toFixed(2)} M☉, Luminosity ${star.lum.toFixed(2)} L☉)\n\n`;
+  for (let i = 0; i < planetCount; i++) {
+    text += generatePlanet(star) + "\n\n";
+  }
+
+  for (let i = 0; i < beltCount; i++) {
+    text += generateAsteroidBelt() + "\n\n";
+  }
+
+  document.getElementById('output').innerText = text.trim();
+}
+</script>
+</body>
+</html>
