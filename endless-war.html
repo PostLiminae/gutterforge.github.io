@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Endless War Simulator</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <style>
+    body {
+      background:#000;
+      color:#fff;
+      font-family: monospace;
+      margin:0; padding:0;
+      overflow:hidden;
+    }
+    #starfield {
+      position: fixed;
+      top:0; left:0; width:100%; height:100%;
+      z-index:-2;
+      pointer-events:none;
+      opacity:0.25;
+    }
+    #game {
+      position: absolute;
+      top:0; left:0; width:100%; height:100%;
+      z-index:-1;
+    }
+    #ui {
+      position:absolute;
+      top:10px; left:10px;
+      background:rgba(0,0,0,0.5);
+      padding:10px;
+      font-size:14px;
+      line-height:1.4;
+    }
+  </style>
+</head>
+<body>
+<canvas id="starfield"></canvas>
+<canvas id="game"></canvas>
+<div id="ui"></div>
+<script>
+/* Starfield */
+const sCanvas=document.getElementById('starfield');
+const sCtx=sCanvas.getContext('2d');
+let stars=[];
+function resizeStar(){
+  sCanvas.width=window.innerWidth;
+  sCanvas.height=window.innerHeight;
+  stars=[];
+  for(let i=0;i<150;i++){
+    stars.push({x:Math.random()*sCanvas.width,
+                y:Math.random()*sCanvas.height,
+                size:Math.random()*1.5+0.5,
+                dx:(Math.random()-0.5)*0.2,
+                dy:(Math.random()-0.5)*0.2,
+                color:['#33ffcc','#33ffaa','#ffffff'][Math.floor(Math.random()*3)]});
+  }
+}
+window.addEventListener('resize',resizeStar);
+resizeStar();
+function animateStar(){
+  sCtx.clearRect(0,0,sCanvas.width,sCanvas.height);
+  for(const star of stars){
+    sCtx.beginPath();
+    sCtx.arc(star.x,star.y,star.size,0,Math.PI*2);
+    sCtx.fillStyle=star.color;
+    sCtx.shadowColor=star.color;
+    sCtx.shadowBlur=6;
+    sCtx.fill();
+    star.x+=star.dx; star.y+=star.dy;
+    if(star.x<0) star.x=sCanvas.width;
+    if(star.x>sCanvas.width) star.x=0;
+    if(star.y<0) star.y=sCanvas.height;
+    if(star.y>sCanvas.height) star.y=0;
+  }
+  requestAnimationFrame(animateStar);
+}
+animateStar();
+/* Simulation */
+const gCanvas=document.getElementById('game');
+const gCtx=gCanvas.getContext('2d');
+function resizeGame(){
+  gCanvas.width=window.innerWidth;
+  gCanvas.height=window.innerHeight;
+}
+window.addEventListener('resize',resizeGame);
+resizeGame();
+const factions=[
+  {name:'Axiom',color:'#ff5555'},
+  {name:'Nebula',color:'#55ff55'},
+  {name:'Zenith',color:'#5555ff'},
+  {name:'Horizon',color:'#ffff55'}
+];
+const systems=[];
+for(let i=0;i<20;i++){
+  systems.push({x:Math.random()*gCanvas.width,
+                y:Math.random()*gCanvas.height,
+                owner:i%factions.length});
+}
+const fleets=[];
+function sendRandomFleet(fIndex){
+  const owned=systems.filter(s=>s.owner===fIndex);
+  const targets=systems.filter(s=>s.owner!==fIndex);
+  if(!owned.length||!targets.length) return;
+  const from=owned[Math.floor(Math.random()*owned.length)];
+  const to=targets[Math.floor(Math.random()*targets.length)];
+  fleets.push({from,to,owner:fIndex,progress:0});
+}
+setInterval(()=>{
+  for(let i=0;i<factions.length;i++) sendRandomFleet(i);
+},1000);
+function update(dt){
+  for(let i=fleets.length-1;i>=0;i--){
+    const fl=fleets[i];
+    fl.progress+=dt/2000;
+    if(fl.progress>=1){
+      if(fl.to.owner!==fl.owner && Math.random()<0.6){
+        fl.to.owner=fl.owner;
+      }
+      fleets.splice(i,1);
+    }
+  }
+}
+function draw(){
+  gCtx.clearRect(0,0,gCanvas.width,gCanvas.height);
+  for(const sys of systems){
+    gCtx.beginPath();
+    gCtx.arc(sys.x,sys.y,6,0,Math.PI*2);
+    gCtx.fillStyle=factions[sys.owner].color;
+    gCtx.shadowColor=factions[sys.owner].color;
+    gCtx.shadowBlur=8;
+    gCtx.fill();
+  }
+  for(const fl of fleets){
+    const {from,to,owner,progress}=fl;
+    const x=from.x+(to.x-from.x)*progress;
+    const y=from.y+(to.y-from.y)*progress;
+    gCtx.beginPath();
+    gCtx.arc(x,y,3,0,Math.PI*2);
+    gCtx.fillStyle=factions[owner].color;
+    gCtx.fill();
+  }
+}
+let last=performance.now();
+function loop(now){
+  const dt=now-last; last=now;
+  update(dt);
+  draw();
+  updateUI();
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+function updateUI(){
+  let html='';
+  for(let i=0;i<factions.length;i++){
+    const count=systems.filter(s=>s.owner===i).length;
+    html+=`<div style="color:${factions[i].color}">${factions[i].name}: ${count}</div>`;
+  }
+  document.getElementById('ui').innerHTML=html;
+}
+</script>
+</body>
+</html>
